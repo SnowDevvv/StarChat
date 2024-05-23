@@ -7,3 +7,5 @@ Neste projeto foi usado as bibliotecas:
   - Socket.io - Fazer a interação dos usuários e o Socket.
   - sqlite3 - Salvar as mensagens e exibi-las.
 > Este é um projeto simples que fiz quando estava no tédio.
+# ❗ | Atenção.
+**Não use o link _vercel.app_, ao invés disso, use o link https://jubilant-space-couscous-q7qvwxgr77xxc65v-3000.app.github.dev/ !**
