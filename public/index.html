@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <style>
+    body {
+      background-color: #383838; 
+      color: white;
+      font-family: Arial;
+    }
+    #messages {
+      height: 300px;
+      overflow-y: scroll;
+    }
+    #message-input {
+      height: 30px;
+      font-family: arial;
+      background-color: white;
+      border-radius: 50px;
+      text-size-adjust: 10px;
+      opacity: 100%;
+      align-self: bottom;
+    }
+    #send-button {
+      border-radius: 50px
+    }
+  </style>
+</head>
+<body>
+  <div id="messages"></div>
+  <input id="message-input" type="text" placeholder="Digite sua mensagem...">
+  <button id="send-button">Enviar</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const messagesDiv = document.getElementById('messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+
+    sendButton.addEventListener('click', () => {
+      const message = messageInput.value;
+      socket.emit('chat message', message);
+      messageInput.value = '';
+    });
+
+    // Carregar mensagens quando a página é carregada
+    socket.on('load messages', (messages) => {
+      messages.forEach((msg) => {
+        appendMessage(msg.message);
+      });
+    });
+
+    // Adicionar mensagem à lista de mensagens
+    function appendMessage(message) {
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      messagesDiv.appendChild(messageElement);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    // Receber mensagem do servidor e exibir na página
+    socket.on('chat message', (msg) => {
+      appendMessage(msg);
+    });
+  </script>
+</body>
+</html>
